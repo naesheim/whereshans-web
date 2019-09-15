@@ -1,0 +1,50 @@
+fullnameOverride: "whereshansel"
+
+replicaCount: 1
+
+containers:
+   - name: web
+     image: naesheim/whereshansel_web
+     tag: 0.2.0
+     pullPolicy: Always
+     environment:
+        API_URL: "https://api.naesheim.com/v1/getlatest"
+     ports:
+       - name: "my-port"
+         containerPort: 5000
+         protocol: TCP
+     resources:
+       limits:
+         cpu: 400m
+         memory: 248Mi
+       requests:
+         cpu: 100m
+         memory: 128Mi
+
+services:
+  - name: web
+    type: ClusterIP
+    port: 8080
+    targetPort: 5000
+    proto: TCP
+    selector:
+      app: whereshansel
+      release: whereshansel-whereshansel
+
+ingress:
+  enabled: true
+    - host: me.naesheim.com
+      paths:
+        - path: /
+          serviceName: web
+          servicePort: 8080
+
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    certmanager.k8s.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/tls-acme: "true"
+
+  tls:
+    - secretName: whereshansel-tls
+      hosts:
+        - naesheim.com
