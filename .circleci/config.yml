@@ -1,5 +1,25 @@
 version: 2.1
 jobs:
+  # build:
+  #   machine:
+  #     image: ubuntu-1604:201903-01
+  #   steps:
+  #     - checkout 
+  #     - run:
+  #         command: |
+  #           docker build -t whereshansel_api_$CIRCLE_SHA1 .
+
+  # test:
+  #   machine:
+  #     image: ubuntu-1604:201903-01
+  #   steps:
+  #     - run: 
+  #         command: |
+  #           docker container run -d -p 8000:5000 whereshansel_api_$CIRCLE_SHA1
+  #           http_response=$(curl -i localhost:8080 | head -n 1 | cut -f 2 -d ' ')
+  #           if [$http_response -ne 200]
+  #             exit 0
+  #           fi
   
   build:
     machine:
@@ -9,8 +29,9 @@ jobs:
       - run:
           command: |
             docker login -u $DOCKER_LOGIN -p $DOCKER_PASS
-            docker build -t naesheim/whereshans_web:$CIRCLE_SHA1 .
+            docker build -t naesheim/whereshans_web:latest -t naesheim/whereshans_web:$CIRCLE_SHA1 .
             docker push naesheim/whereshans_web:$CIRCLE_SHA1
+            docker push naesheim/whereshans_web:latest
   
   deployApp:
     docker:

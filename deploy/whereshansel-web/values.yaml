@@ -1,11 +1,11 @@
-fullnameOverride: "whereshansel"
+fullnameOverride: "whereshans-web"
 
 replicaCount: 1
 
 containers:
    - name: web
-     image: naesheim/whereshansel_web
-     tag: 0.2.0
+     image: naesheim/whereshans_web
+     tag: 0.1.0
      pullPolicy: Always
      environment:
         API_URL: "https://api.naesheim.com/v1/getlatest"
@@ -28,12 +28,12 @@ services:
     targetPort: 5000
     proto: TCP
     selector:
-      app: whereshansel
-      release: whereshansel-whereshansel
+      app: whereshans-web
+      release: whereshans-web
 
 ingress:
   enabled: true
-    - host: me.naesheim.com
+    - host: naesheim.com
       paths:
         - path: /
           serviceName: web
@@ -41,10 +41,10 @@ ingress:
 
   annotations:
     kubernetes.io/ingress.class: nginx
-    certmanager.k8s.io/cluster-issuer: letsencrypt-prod
+    certmanager.k8s.io/cluster-issuer: letsencrypt-production
     kubernetes.io/tls-acme: "true"
 
   tls:
-    - secretName: whereshansel-tls
+    - secretName: whereshans-web
       hosts:
         - naesheim.com
