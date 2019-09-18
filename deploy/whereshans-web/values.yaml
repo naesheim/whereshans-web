@@ -33,6 +33,7 @@ services:
 
 ingress:
   enabled: true
+  hosts:
     - host: naesheim.com
       paths:
         - path: /
