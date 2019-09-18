@@ -3,9 +3,9 @@ fullnameOverride: "whereshans-web"
 replicaCount: 1
 
 containers:
-   - name: web
+   - name: whereshans-web
      image: naesheim/whereshans_web
-     tag: 0.1.0
+     tag: latest
      pullPolicy: Always
      environment:
         API_URL: "https://api.naesheim.com/v1/getlatest"
@@ -29,7 +29,7 @@ services:
     proto: TCP
     selector:
       app: whereshans-web
-      release: whereshans-web
+      release: whereshans-web-whereshans-web
 
 ingress:
   enabled: true
