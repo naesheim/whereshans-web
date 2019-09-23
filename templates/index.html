@@ -31,11 +31,11 @@
 			popupAnchor:  [0, 0]
 		}
 	});
-
+        print('{{data}}');
         var hansIcon = new LeafIcon({iconUrl: 'static/hansel.png'})
 
-        var latlon = "{{data['latlon']}}";
-        var time = "{{ data['time'] }}";
+        var latlon = ['{{data["latitude"]}}','{{data["longitude"]}}'];
+        var time = '{{ data["time"] }}';
         marker = new L.marker(latlon, {icon: hansIcon}).bindPopup("My last hangout " + time).addTo(mymap)
 
         mymap.flyTo(latlon, 10);
